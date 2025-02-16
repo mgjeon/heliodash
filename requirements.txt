@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+matplotlib
+astropy[all]
+sunpy[all]
+ply
+beautifulsoup4
