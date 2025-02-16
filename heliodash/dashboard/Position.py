@@ -37,15 +37,26 @@ period = st.sidebar.number_input("Days", value=60, step=1)
 direction = st.sidebar.selectbox(
     "Direction", ["forward", "backward", "both"], index=1
 )
-earth_align = st.sidebar.toggle("Plot Earth at South", value=False)
+earth_adjust = st.sidebar.toggle("Adjust Earth Position", value=False)
+earth_lon = None
+if earth_adjust:
+    # earth_lon = st.sidebar.selectbox(
+    #     "Position",
+    #     ["E", "W", "S", "N"],
+    #     index=2,
+    # )
+    earth_lon = st.sidebar.number_input("Position", 0, 360, value=270, step=1)
 
 st.markdown(
     """
     # Positions of Planets and Spacecrafts
 
-    Source: [JPL Horizons](https://ssd.jpl.nasa.gov/horizons/), [SunPy](https://docs.sunpy.org/en/stable/api/sunpy.coordinates.frames.HeliocentricInertial.html)
+    Refs: [Solar-MACH](https://solar-mach.github.io/), [JPL Horizons](https://ssd.jpl.nasa.gov/horizons/), [SunPy](https://docs.sunpy.org/en/stable/generated/gallery/showcase/where_is_stereo.html)
     """
 )
 
-fig = plot_body_position(names, obstime, period, direction, earth_align)
+with st.spinner("Wait for it...", show_time=True):
+    fig = plot_body_position(
+        names, obstime, period, direction, earth_adjust, earth_lon
+    )
 st.pyplot(fig)

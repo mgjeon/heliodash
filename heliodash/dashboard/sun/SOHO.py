@@ -1,13 +1,13 @@
 import streamlit as st
 
-from heliodash.packages.sun.sdo.sdo_image import sdo_image
-from heliodash.packages.sun.sdo.sdo_video import sdo_video
+from heliodash.packages.sun.soho.soho_image import soho_image
+from heliodash.packages.sun.soho.soho_video import soho_video
 
 st.markdown(
     """
-    # SDO
+    # SOHO
 
-    Launch: [February 11, 2010](https://science.nasa.gov/mission/sdo/)
+    Launch: [Dec. 2, 1995](https://science.nasa.gov/mission/soho/)
     """
 )
 
@@ -19,40 +19,19 @@ plot_type = st.sidebar.selectbox(
 if plot_type == "Image":
     st.markdown(
         """
-        # SDO AIA and HMI Images
+        # SOHO EIT and LASCO Images
 
-        Source: [NASA/SDO](https://sdo.gsfc.nasa.gov/)
+        Source: [NASA/SOHO](https://soho.nascom.nasa.gov/home.html), [SOHO/EIT](https://umbra.nascom.nasa.gov/eit/)
         """
-    )
-    list_of_products = (
-        "0094",
-        "0131",
-        "0171",
-        "0193",
-        "0211",
-        "0304",
-        "0335",
-        "1600",
-        "1700",
-        "304_211_171",
-        "094_335_193",
-        "HMImag_171",
-        "HMIB",
-        "HMIBC",
-        "HMII",
-        "HMIIC",
-        "HMIIF",
-        "HMID",
     )
 
     products = st.sidebar.multiselect(
         "Products",
-        list_of_products,
-        list_of_products,
+        ["171", "195", "284", "304", "c2", "c3"],
+        ["171", "195", "284", "304", "c2", "c3"],
     )
-    pfss = st.sidebar.toggle("PFSS", value=False)
 
-    info, prod_info = sdo_image(products=products, pfss=pfss)
+    info, prod_info = soho_image(products=products)
 
     for p in products:
         html_code = f"""
@@ -74,30 +53,19 @@ if plot_type == "Image":
 if plot_type == "Video":
     st.markdown(
         """
-        # SDO AIA Videos
+        # SOHO EIT and LASCO Images
 
-        Source: [NASA/SDO](https://sdo.gsfc.nasa.gov/)
+        Source: [NASA/SOHO](https://soho.nascom.nasa.gov/home.html)
         """
-    )
-    list_of_products = (
-        "0094",
-        "0131",
-        "0171",
-        "0193",
-        "0211",
-        "0304",
-        "0335",
-        "1600",
-        "1700",
     )
 
     products = st.sidebar.multiselect(
         "Products",
-        list_of_products,
-        list_of_products,
+        ["171", "195", "284", "304", "c2", "c3", "c2_combo", "c3_combo"],
+        ["171", "195", "284", "304", "c2", "c3", "c2_combo", "c3_combo"],
     )
 
-    info, prod_info = sdo_video(products=products)
+    info, prod_info = soho_video(products=products)
 
     for p in products:
         html_code = f"""
@@ -109,7 +77,7 @@ if plot_type == "Video":
             box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
             text-align: center;
         ">  
-            <h2>{prod_info[p]}<br>48 hours</h2>
+            <h2>{prod_info[p]}</h2>
             <video width="100%" autoplay loop muted playsinline controls>
                 <source src="{info[p]}" type="video/mp4">
                 Your browser does not support the video tag.

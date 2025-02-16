@@ -58,7 +58,9 @@ class Plotter:
         return coord, coords
 
 
-def plot_body_position(names, obstime, period, direction, earth_align):
+def plot_body_position(
+    names, obstime, period, direction, earth_adjust, earth_lon
+):
     obstime = Time(obstime)
     hci_frame = HeliocentricInertial(obstime=obstime)
     if direction == "forward":
@@ -90,14 +92,30 @@ def plot_body_position(names, obstime, period, direction, earth_align):
     ax.set_rlabel_position(0)
     ax.xaxis.set_tick_params(labelsize=15)
     ax.yaxis.set_tick_params(labelsize=15)
+    ax.xaxis.grid(True, color="white", linestyle="-", linewidth=0.5)
+    # ax.yaxis.grid(True, color="white", linestyle="-", linewidth=1)
+    theta = np.linspace(0, 2 * np.pi, 100)
+    for r in [0.5, 1, 1.5, 2]:
+        ax.plot(theta, np.full_like(theta, r), "w-", lw=0.5)
     # ==============================================================================
     ax.plot(0, 0, "o", markersize=15, color="yellow", label="Sun", zorder=100)
     # ------------------------------------------------------------
     earth_coord, _ = plotter.orbit(
         ax, kind="planet", name="Earth", color="lime"
     )
-    if earth_align:
-        ax.set_theta_offset(np.deg2rad(270 - earth_coord.lon.to(u.deg).value))
+    if earth_adjust:
+        # if earth_lon == "S":
+        #     earth_pos = 270
+        # if earth_lon == "N":
+        #     earth_pos = 90
+        # if earth_lon == "E":
+        #     earth_pos = 0
+        # if earth_lon == "W":
+        #     earth_pos = 180
+        earth_pos = earth_lon
+        ax.set_theta_offset(
+            np.deg2rad(earth_pos - earth_coord.lon.to(u.deg).value)
+        )
     # ------------------------------------------------------------
     for name in names:
         if name == "Mercury":

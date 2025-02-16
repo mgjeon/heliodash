@@ -15,8 +15,12 @@ def main():
             Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosphere-related data.
 
             ## Available Pages
-            - [GOES](/GOES)
+            ### Sun
+            - [SOHO](/SOHO)
             - [SDO](/SDO)
+            - [GOES](/GOES)
+
+            ### Jupiter
             - [Juno](/Juno)
 
         """
@@ -39,6 +43,7 @@ def main():
             ],
             "Sun": [
                 st.Page("dashboard/sun/GOES.py", title="GOES"),
+                st.Page("dashboard/sun/SOHO.py", title="SOHO"),
                 st.Page("dashboard/sun/SDO.py", title="SDO"),
             ],
             "Jupiter": [
