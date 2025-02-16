@@ -7,3 +7,4 @@ sunpy[all]
 ply
 beautifulsoup4
 heliodash
+ffmpeg-python
