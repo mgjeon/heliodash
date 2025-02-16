@@ -121,16 +121,9 @@ def goes_xray_flux(
         loc="upper right", bbox_to_anchor=(0.85, 0), ncols=2, fontsize=25
     )
 
-    plt.title(
-        f"""
-            GOES X-ray Flux (1-minute data)
-              
-            {first_time.strftime("%Y-%m-%d %H:%M")} {tz} $-$ {last_time.strftime("%Y-%m-%d %H:%M")} {tz}
-            
-            Updated: {now.strftime("%Y-%m-%d %H:%M")} {tz}
-            """,
+    fig.suptitle(
+        f"GOES X-ray Flux (1-minute data)\n\n{first_time.strftime('%Y-%m-%d %H:%M')} {tz} $-$ {last_time.strftime('%Y-%m-%d %H:%M')} {tz}\n\nUpdated: {now.strftime('%Y-%m-%d %H:%M')} {tz}",
         fontsize=25,
-        loc="left",
     )
 
     flare = flare_config["show"]

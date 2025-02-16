@@ -134,16 +134,9 @@ def goes_proton_flux(
     fig.legend(
         loc="upper right", bbox_to_anchor=(0.9, 0), ncols=2, fontsize=25
     )
-    plt.title(
-        f"""
-            GOES Proton Flux (5-minute data)
-              
-            {first_time.strftime("%Y-%m-%d %H:%M")} {tz} $-$ {last_time.strftime("%Y-%m-%d %H:%M")} {tz}
-            
-            Updated: {now.strftime("%Y-%m-%d %H:%M")} {tz}
-            """,
+    fig.suptitle(
+        f"GOES Proton Flux (5-minute data)\n\n{first_time.strftime('%Y-%m-%d %H:%M')} {tz} $-$ {last_time.strftime('%Y-%m-%d %H:%M')} {tz}\n\nUpdated: {now.strftime('%Y-%m-%d %H:%M')} {tz}",
         fontsize=25,
-        loc="left",
     )
 
     plt.tight_layout()

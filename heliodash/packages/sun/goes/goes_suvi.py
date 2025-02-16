@@ -1,3 +1,8 @@
+"""
+https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes
+"""
+
+
 def goes_suvi_image(
     primary=True, products=["094", "131", "171", "195", "284", "304", "map"]
 ):

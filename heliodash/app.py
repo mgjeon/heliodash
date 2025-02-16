@@ -31,6 +31,10 @@ def main():
                     icon=":material/home:",
                     url_path="",
                 ),
+                st.Page(
+                    "dashboard/Position.py",
+                    title="Positions of Planets and Spacecrafts",
+                ),
             ],
             "Sun": [
                 st.Page("dashboard/sun/GOES.py", title="GOES"),
