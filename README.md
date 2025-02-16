@@ -4,10 +4,6 @@
    
 Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosphere-related data.
 
-## Available Pages
-- GOES
-- Juno
-
 ## Running Locally
 
 Install the latest version of HelioDash:
