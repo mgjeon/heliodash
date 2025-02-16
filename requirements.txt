@@ -6,3 +6,4 @@ astropy[all]
 sunpy[all]
 ply
 beautifulsoup4
+heliodash
