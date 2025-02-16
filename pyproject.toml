@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "heliodash"
-version = "0.0.7"
+version = "0.0.8"
 description = "Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosphere-related data."
 readme = "README.md"
 requires-python = ">=3.10"

@@ -16,6 +16,7 @@ def main():
 
             ## Available Pages
             - [GOES](/GOES)
+            - [SDO](/SDO)
             - [Juno](/Juno)
 
         """
@@ -38,6 +39,7 @@ def main():
             ],
             "Sun": [
                 st.Page("dashboard/sun/GOES.py", title="GOES"),
+                st.Page("dashboard/sun/SDO.py", title="SDO"),
             ],
             "Jupiter": [
                 st.Page("dashboard/jupiter/Juno.py", title="Juno"),
