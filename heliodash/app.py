@@ -24,7 +24,6 @@ def main():
     pg = st.navigation(
         {
             "Overview": [
-                # Load pages from functions
                 st.Page(
                     home,
                     title="Home",
@@ -33,9 +32,11 @@ def main():
                     url_path="",
                 ),
             ],
-            "Dashboard": [
-                st.Page("dashboard/1_GOES.py", title="GOES"),
-                st.Page("dashboard/2_Juno.py", title="Juno"),
+            "Sun": [
+                st.Page("dashboard/sun/GOES.py", title="GOES"),
+            ],
+            "Jupiter": [
+                st.Page("dashboard/jupiter/Juno.py", title="Juno"),
             ],
         }
     )

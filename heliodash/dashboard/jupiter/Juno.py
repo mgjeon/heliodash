@@ -3,7 +3,7 @@ from datetime import datetime
 import numpy as np
 import streamlit as st
 
-from heliodash.packages.juno.juno_jiram_image import (
+from heliodash.packages.jupiter.juno.juno_jiram_image import (
     juno_jiram_ani,
     juno_jiram_image,
     juno_jiram_image_latest,

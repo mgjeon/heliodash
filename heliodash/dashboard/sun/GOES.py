@@ -1,6 +1,6 @@
 import streamlit as st
 
-from heliodash.packages.goes.goes_xray_flux import goes_primary_xray_flux
+from heliodash.packages.sun.goes.goes_xray_flux import goes_primary_xray_flux
 
 st.markdown(
     """

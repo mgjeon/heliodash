@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import streamlit as st
 
-from heliodash.packages.juno.pds_parser import read_label
+from heliodash.packages.jupiter.juno.pds_parser import read_label
 from heliodash.packages.util.html_parser import get_bs
 
 dataroot = Path("./data")
