@@ -8,14 +8,18 @@ import pandas as pd
 from sunpy.time import parse_time
 
 
-def goes_primary_xray_flux(
+def goes_xray_flux(
     data_type,
+    primary=True,
     kst=False,
     flare_config={"show": True, "X": True, "M": True, "C": False},
 ):
+    sat_class = "primary" if primary else "secondary"
     assert data_type in ["6-hour", "1-day", "3-day", "7-day"], (
         "data_type must be one of ['6-hour', '1-day', '3-day', '7-day']"
     )
+
+    plt.rcParams.update({"font.size": 20})
 
     root = Path("figures")
     root.mkdir(exist_ok=True)
@@ -31,7 +35,7 @@ def goes_primary_xray_flux(
 
     # get GOES X-ray data
     goes_json_data = pd.read_json(
-        f"https://services.swpc.noaa.gov/json/goes/primary/xrays-{data_type}.json"
+        f"https://services.swpc.noaa.gov/json/goes/{sat_class}/xrays-{data_type}.json"
     )
     goes_xrsa = goes_json_data[goes_json_data["energy"] == "0.05-0.4nm"]
     goes_xrsb = goes_json_data[goes_json_data["energy"] == "0.1-0.8nm"]
@@ -45,7 +49,7 @@ def goes_primary_xray_flux(
     last_time = time_array[-1]
 
     # create figure and plot
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(15, 10))
 
     # plot GOES X-ray flux
     ax.plot(
@@ -64,10 +68,12 @@ def goes_primary_xray_flux(
     # set y-axis scale and limit
     ax.set_yscale("log")
     ax.set_ylim(1e-9, 1e-2)
-    ax.set_ylabel("W m$^{-2}$")
+    ax.set_ylabel(r"W $\cdot$ m$^{-2}$", fontsize=25)
+    ax.yaxis.set_tick_params(labelsize=25)
 
     # set x-axis limit
     ax.set_xlim(first_time, last_time + timedelta(hours=1))
+    ax.xaxis.set_tick_params(labelsize=25)
 
     # set grid and ticks
     ax.yaxis.grid(True, "major")
@@ -87,21 +93,20 @@ def goes_primary_xray_flux(
             label,
             transform=ax.get_yaxis_transform(),
             horizontalalignment="center",
+            fontsize=25,
         )
 
     # x-axis tick time format
+    plt.xticks(rotation=0)
     if data_type == "6-hour":
-        plt.xticks(rotation=0)
         ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 1)))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M\n%m-%d\n%Y"))
         ax.xaxis.set_minor_locator(mdates.MinuteLocator(byminute=[0, 30]))
     if data_type == "1-day":
-        plt.xticks(rotation=0)
         ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 3)))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M\n%m-%d\n%Y"))
         ax.xaxis.set_minor_locator(mdates.HourLocator(byhour=range(0, 24, 1)))
     if data_type == "3-day":
-        plt.xticks(rotation=0)
         ax.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 12)))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M\n%m-%d\n%Y"))
         ax.xaxis.set_minor_locator(mdates.HourLocator(byhour=range(0, 24, 6)))
@@ -112,19 +117,27 @@ def goes_primary_xray_flux(
 
     # set legend and title
     tz = "KST" if kst else "UTC"
-    fig.legend(loc="upper right", bbox_to_anchor=(0.97, 0.85))
-    plt.title(f"""
+    fig.legend(
+        loc="upper right", bbox_to_anchor=(0.85, 0), ncols=2, fontsize=25
+    )
+
+    plt.title(
+        f"""
             GOES X-ray Flux (1-minute data)
+              
             {first_time.strftime("%Y-%m-%d %H:%M")} {tz} $-$ {last_time.strftime("%Y-%m-%d %H:%M")} {tz}
             
             Updated: {now.strftime("%Y-%m-%d %H:%M")} {tz}
-            """)
+            """,
+        fontsize=25,
+        loc="left",
+    )
 
     flare = flare_config["show"]
     if flare:
         # plot flare events
         goes_xray_flare_week = pd.read_json(
-            "https://services.swpc.noaa.gov/json/goes/primary/xray-flares-7-day.json"
+            f"https://services.swpc.noaa.gov/json/goes/{sat_class}/xray-flares-7-day.json"
         )
         goes_xray_flare_week["max_time_datetime"] = parse_time(
             goes_xray_flare_week["max_time"]
