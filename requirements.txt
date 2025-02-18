@@ -8,3 +8,4 @@ ply
 beautifulsoup4
 heliodash
 ffmpeg-python
+plotly
