@@ -16,9 +16,11 @@ def main():
 
             ## Available Pages
             ### Sun
-            - [SOHO](/SOHO)
-            - [SDO](/SDO)
             - [GOES](/GOES)
+            - [SOHO](/SOHO)
+            - [Hinode](/Hinode)
+            - [STEREO](/STEREO)
+            - [SDO](/SDO)
 
             ### Jupiter
             - [Juno](/Juno)
@@ -44,6 +46,8 @@ def main():
             "Sun": [
                 st.Page("dashboard/sun/GOES.py", title="GOES"),
                 st.Page("dashboard/sun/SOHO.py", title="SOHO"),
+                st.Page("dashboard/sun/Hinode.py", title="Hinode"),
+                st.Page("dashboard/sun/STEREO.py", title="STEREO"),
                 st.Page("dashboard/sun/SDO.py", title="SDO"),
             ],
             "Jupiter": [

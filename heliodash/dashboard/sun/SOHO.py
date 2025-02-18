@@ -7,6 +7,8 @@ st.markdown(
     """
     # SOHO
 
+    ![SOHO](https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/SOHO_20151202_1600.jpg)
+
     Launch: [Dec. 2, 1995](https://science.nasa.gov/mission/soho/)
     """
 )

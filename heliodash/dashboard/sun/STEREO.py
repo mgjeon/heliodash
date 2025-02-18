@@ -1,50 +1,51 @@
 import streamlit as st
 
-from heliodash.packages.sun.sdo.sdo_image import sdo_image
-from heliodash.packages.sun.sdo.sdo_video import sdo_video
+from heliodash.packages.sun.stereo.stereo_image import stereo_image
+from heliodash.packages.sun.stereo.stereo_video import stereo_video
 
 st.markdown(
     """
-    # SDO
+    # STEREO
 
-    ![SDO](https://www.nasa.gov/wp-content/uploads/2023/03/421359main_226837main_SDOconcept2_HI_full.jpg)
+    ![STEREO](https://www.jhuapl.edu/sites/default/files/2024-03/IMG-Mission-STEREO.jpg)
 
-    Launch: [Feb. 11, 2010](https://science.nasa.gov/mission/sdo/)
+    Launch: [Oct. 26, 2006](https://science.nasa.gov/mission/stereo/)
     """
 )
+
 
 plot_type = st.sidebar.selectbox(
     "Plot Type",
     ("Image", "Video"),
 )
 
+
 if plot_type == "Image":
+    latest_available = st.sidebar.toggle(
+        "Show Latest Available Image", value=False
+    )
+
     st.markdown(
         """
-        # SDO AIA and HMI Images
+        # STEREO EUVI and COR Images
 
-        Source: [NASA/SDO](https://sdo.gsfc.nasa.gov/)
+        Source: [NASA/SSC](https://stereo-ssc.nascom.nasa.gov/)
         """
     )
+
     list_of_products = (
-        "0094",
-        "0131",
-        "0171",
-        "0193",
-        "0211",
-        "0304",
-        "0335",
-        "1600",
-        "1700",
-        "304_211_171",
-        "094_335_193",
-        "HMImag_171",
-        "HMIB",
-        "HMIBC",
-        "HMII",
-        "HMIIC",
-        "HMIIF",
-        "HMID",
+        "A_171",
+        "A_195",
+        "A_284",
+        "A_304",
+        "A_COR1",
+        "A_COR2",
+        "B_171",
+        "B_195",
+        "B_284",
+        "B_304",
+        "B_COR1",
+        "B_COR2",
     )
 
     products = st.sidebar.multiselect(
@@ -52,9 +53,11 @@ if plot_type == "Image":
         list_of_products,
         list_of_products,
     )
-    pfss = st.sidebar.toggle("PFSS", value=False)
 
-    info, prod_info = sdo_image(products=products, pfss=pfss)
+    with st.spinner("Loading images...", show_time=True):
+        info, prod_info = stereo_image(
+            products=products, latest_available=latest_available
+        )
 
     for p in products:
         html_code = f"""
@@ -76,21 +79,25 @@ if plot_type == "Image":
 if plot_type == "Video":
     st.markdown(
         """
-        # SDO AIA Videos
+        # STEREO EUVI and COR Videos
 
-        Source: [NASA/SDO](https://sdo.gsfc.nasa.gov/)
+        Source: [NASA/SSC](https://stereo-ssc.nascom.nasa.gov/)
         """
     )
+
     list_of_products = (
-        "0094",
-        "0131",
-        "0171",
-        "0193",
-        "0211",
-        "0304",
-        "0335",
-        "1600",
-        "1700",
+        "A_171",
+        "A_195",
+        "A_284",
+        "A_304",
+        "A_COR1",
+        "A_COR2",
+        "B_171",
+        "B_195",
+        "B_284",
+        "B_304",
+        "B_COR1",
+        "B_COR2",
     )
 
     products = st.sidebar.multiselect(
@@ -99,7 +106,8 @@ if plot_type == "Video":
         list_of_products,
     )
 
-    info, prod_info = sdo_video(products=products)
+    with st.spinner("Loading videos...", show_time=True):
+        info, prod_info = stereo_video(products=products)
 
     for p in products:
         html_code = f"""
@@ -111,7 +119,7 @@ if plot_type == "Video":
             box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
             text-align: center;
         ">  
-            <h2>{prod_info[p]}<br>48 hours</h2>
+            <h2>{prod_info[p]}</h2>
             <video width="100%" autoplay loop muted playsinline controls>
                 <source src="{info[p]}" type="video/mp4">
                 Your browser does not support the video tag.

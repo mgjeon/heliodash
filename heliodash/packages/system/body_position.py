@@ -19,7 +19,7 @@ class Plotter:
         )
         self.direction = direction
 
-    def orbit(self, ax, kind, name, color):
+    def orbit(self, ax, kind, name, color, search_name=None):
         obstime = self.obstime
         hci_frame = self.frame
         period = self.period
@@ -30,7 +30,15 @@ class Plotter:
         elif kind == "mission":
             f = get_horizons_coord
 
-        coord = f(name, obstime)
+        print("Search", search_name)
+
+        try:
+            if search_name:
+                coord = f(search_name, obstime)
+            else:
+                coord = f(name, obstime)
+        except Exception:
+            return None, None
         coord = coord.transform_to(hci_frame)
         ax.plot(
             coord.lon.to(u.rad),
@@ -50,7 +58,10 @@ class Plotter:
             backward_times = sorted(obstime - np.arange(period) * u.day)
             times = np.concatenate([backward_times, forward_times])
 
-        coords = f(name, times)
+        if search_name:
+            coords = f(search_name, times)
+        else:
+            coords = f(name, times)
         coords = coords.transform_to(hci_frame)
         ax.plot(
             coords.lon.to(u.rad), coords.distance, "-", color=color, zorder=0
@@ -87,32 +98,49 @@ def plot_body_position(
     ax.tick_params(
         axis="y", colors="white", direction="in", right=True
     )  # Y-axis ticks
-    ax.set_rticks([0.5, 1, 1.5, 2])
-    ax.set_rlim(0, 2.2)
+    r_list = [0.5, 1, 1.5, 2]
+    r_max = 2.2
+    if "Jupiter" in names or "Juno" in names:
+        r_list = [1, 2, 3, 4, 5, 6]
+        r_max = 7
+    if "Saturn" in names:
+        r_list = [1, 5, 10]
+        r_max = 11
+    if "Uranus" in names:
+        r_list = [1, 5, 10, 15, 20]
+        r_max = 21
+    if "Neptune" in names:
+        r_list = [1, 10, 20, 30]
+        r_max = 31
+    if "Voayger 1" in names or "Voyager 2" in names:
+        r_list = [1, 50, 100, 150, 200]
+        r_max = 201
+    ax.set_rticks(r_list)
+    ax.set_rlim(0, r_max)
     ax.set_rlabel_position(0)
     ax.xaxis.set_tick_params(labelsize=15)
     ax.yaxis.set_tick_params(labelsize=15)
     ax.xaxis.grid(True, color="white", linestyle="-", linewidth=0.5)
     # ax.yaxis.grid(True, color="white", linestyle="-", linewidth=1)
     theta = np.linspace(0, 2 * np.pi, 100)
-    for r in [0.5, 1, 1.5, 2]:
+    for r in r_list:
         ax.plot(theta, np.full_like(theta, r), "w-", lw=0.5)
     # ==============================================================================
-    ax.plot(0, 0, "o", markersize=15, color="yellow", label="Sun", zorder=100)
+    ax.plot(0, 0, "o", markersize=10, color="yellow", label="Sun", zorder=100)
     # ------------------------------------------------------------
     earth_coord, _ = plotter.orbit(
         ax, kind="planet", name="Earth", color="lime"
     )
     if earth_adjust:
-        # if earth_lon == "S":
-        #     earth_pos = 270
-        # if earth_lon == "N":
-        #     earth_pos = 90
-        # if earth_lon == "E":
-        #     earth_pos = 0
-        # if earth_lon == "W":
-        #     earth_pos = 180
-        earth_pos = earth_lon
+        if earth_lon == "S":
+            earth_pos = 270
+        if earth_lon == "N":
+            earth_pos = 90
+        if earth_lon == "E":
+            earth_pos = 0
+        if earth_lon == "W":
+            earth_pos = 180
+        # earth_pos = earth_lon
         ax.set_theta_offset(
             np.deg2rad(earth_pos - earth_coord.lon.to(u.deg).value)
         )
@@ -120,17 +148,49 @@ def plot_body_position(
     for name in names:
         if name == "Mercury":
             kind, color = "planet", "lavender"
+            search_name = None
         if name == "Venus":
             kind, color = "planet", "coral"
+            search_name = None
         if name == "Mars":
             kind, color = "planet", "red"
+            search_name = None
+        if name == "Jupiter":
+            kind, color = "planet", "peachpuff"
+            search_name = None
+        if name == "Saturn":
+            kind, color = "planet", "lightsteelblue"
+            search_name = None
+        if name == "Uranus":
+            kind, color = "planet", "skyblue"
+            search_name = None
+        if name == "Neptune":
+            kind, color = "planet", "deepskyblue"
+            search_name = None
         if name == "STEREO-A":
             kind, color = "mission", "cyan"
+            search_name = None
+        if name == "STEREO-B":
+            kind, color = "mission", "magenta"
+            search_name = None
         if name == "Parker Solar Probe":
-            kind, color = "mission", "orange"
+            kind, color = "mission", "violet"
+            search_name = None
         if name == "Solar Orbiter":
             kind, color = "mission", "blue"
-        plotter.orbit(ax, kind=kind, name=name, color=color)
+            search_name = None
+        if name == "Juno":
+            kind, color = "mission", "pink"
+            search_name = "Juno (spacecraft)"
+        if name == "Voyager 1":
+            kind, color = "mission", "gold"
+            search_name = None
+        if name == "Voyager 2":
+            kind, color = "mission", "silver"
+            search_name = None
+        plotter.orbit(
+            ax, kind=kind, name=name, color=color, search_name=search_name
+        )
     # ==============================================================================
     fig.legend(
         facecolor="black",
