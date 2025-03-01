@@ -14,9 +14,11 @@ class Plotter:
         self.obstime = obstime
         self.frame = frame
         self.period = period
-        assert direction in ["forward", "backward", "both"], (
-            "direction must be forward, backward or both"
-        )
+        assert direction in [
+            "forward",
+            "backward",
+            "both",
+        ], "direction must be forward, backward or both"
         self.direction = direction
 
     def orbit(self, fig, kind, name, color, search_name=None):

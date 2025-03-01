@@ -15,9 +15,12 @@ def goes_proton_flux(
 ):
     sat_class = "primary" if primary else "secondary"
 
-    assert data_type in ["6-hour", "1-day", "3-day", "7-day"], (
-        "data_type must be one of ['6-hour', '1-day', '3-day', '7-day']"
-    )
+    assert data_type in [
+        "6-hour",
+        "1-day",
+        "3-day",
+        "7-day",
+    ], "data_type must be one of ['6-hour', '1-day', '3-day', '7-day']"
 
     root = Path("figures")
     root.mkdir(exist_ok=True)

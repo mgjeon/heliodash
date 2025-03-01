@@ -15,12 +15,18 @@ def main():
             Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosphere-related data.
 
             ## Available Pages
+
+            - [Positions of Planets and Spacecrafts](/Position)
+
             ### Sun
             - [GOES](/GOES)
             - [SOHO](/SOHO)
             - [Hinode](/Hinode)
             - [STEREO](/STEREO)
+            - [PROBA-2](/PROBA2)
             - [SDO](/SDO)
+            - [Parker Solar Probe](/PSP)
+            - [Solar Orbiter](/SolO)
 
             ### Jupiter
             - [Juno](/Juno)
@@ -48,7 +54,10 @@ def main():
                 st.Page("dashboard/sun/SOHO.py", title="SOHO"),
                 st.Page("dashboard/sun/Hinode.py", title="Hinode"),
                 st.Page("dashboard/sun/STEREO.py", title="STEREO"),
+                st.Page("dashboard/sun/PROBA2.py", title="PROBA-2"),
                 st.Page("dashboard/sun/SDO.py", title="SDO"),
+                st.Page("dashboard/sun/PSP.py", title="Parker Solar Probe"),
+                st.Page("dashboard/sun/SolO.py", title="Solar Orbiter"),
             ],
             "Jupiter": [
                 st.Page("dashboard/jupiter/Juno.py", title="Juno"),

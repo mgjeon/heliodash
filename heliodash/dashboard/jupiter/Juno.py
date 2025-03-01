@@ -99,11 +99,6 @@ if plot_type == "JIRAM Image":
                 """
             )
             img_list_index = np.arange(len(img_list))
-            # index_range = st.select_slider(
-            #     "Index Range",
-            #     options=img_list_index,
-            #     value=(0, len(img_list)-1),
-            # )
             index_range = st.select_slider(
                 "Index Range",
                 options=img_list_index,
@@ -112,7 +107,6 @@ if plot_type == "JIRAM Image":
                     img_list[x][12:-8], "%Y%jT%H%M%S"
                 ).strftime("%Y-%m-%d %H:%M:%S"),
             )
-
             interval = st.number_input(
                 "Delay between frames in milliseconds",
                 min_value=1,
