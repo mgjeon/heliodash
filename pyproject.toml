@@ -1,23 +1,21 @@
-[build-system]
-requires = ["setuptools >= 64"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "heliodash"
-version = "0.0.11"
+version = "0.0.12"
 description = "Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosphere-related data."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Mingyu Jeon"}]
 dependencies = [
-    "streamlit",
-    "pandas",
-    "numpy",
-    "matplotlib",
-    "astropy[all]",
-    "sunpy[all]",
-    "ply",
-    "beautifulsoup4",
+    "astropy[all]>=6.1.7",
+    "beautifulsoup4>=4.13.3",
+    "ffmpeg-python>=0.2.0",
+    "matplotlib>=3.10.1",
+    "numpy>=2.2.4",
+    "pandas>=2.2.3",
+    "plotly>=6.0.1",
+    "ply>=3.11",
+    "streamlit>=1.44.1",
+    "sunpy[all]>=6.0.5",
 ]
 
 [project.urls]
@@ -28,6 +26,10 @@ Issues = "https://github.com/mgjeon/heliodash/issues"
 [project.optional-dependencies]
 dev = ["ruff"]
 
+[build-system]
+requires = ["setuptools >= 64"]
+build-backend = "setuptools.build_meta"
+
 [tool.setuptools]
 packages = ["heliodash"]
 
@@ -36,3 +38,8 @@ line-length = 79
 
 [tool.ruff.lint]
 extend-select = ["I"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.5",
+]

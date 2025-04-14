@@ -52,6 +52,32 @@ names = st.sidebar.multiselect(
     ],
 )
 
+default_colors = {
+    "Mercury": "#D3D3D3",
+    "Venus": "#FF7F50",
+    "Mars": "#FF4500",
+    "Jupiter": "#FFD700",
+    "Saturn": "#B0C4DE",
+    "Uranus": "#87CEEB",
+    "Neptune": "#4682B4",
+    "STEREO-A": "#00FFFF",
+    "STEREO-B": "#FF00FF",
+    "Parker Solar Probe": "#EE82EE",
+    "Solar Orbiter": "#0000FF",
+    "Juno": "#FFC0CB",
+    "Voyager 1": "#FFD700",
+    "Voyager 2": "#C0C0C0",
+}
+
+colors = {}
+for obj in names:
+    color = st.sidebar.color_picker(
+        f"Pick a color for {obj}:", default_colors[obj]
+    )
+    colors[obj] = color
+
+print(colors)
+
 # period = st.sidebar.slider("Period", 1, 1000, 60)
 period = st.sidebar.number_input("Days", value=60, step=1)
 direction = st.sidebar.selectbox(
@@ -78,7 +104,7 @@ st.markdown(
 if plot_type == "Matplotlib":
     with st.spinner("Wait for it...", show_time=True):
         fig = plot_body_position(
-            names, obstime, period, direction, earth_adjust, earth_lon
+            names, obstime, period, direction, earth_adjust, earth_lon, colors
         )
     st.pyplot(fig)
 

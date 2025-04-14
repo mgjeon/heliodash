@@ -71,8 +71,32 @@ class Plotter:
         return coord, coords
 
 
+default_colors = {
+    "Mercury": "lavender",
+    "Venus": "coral",
+    "Mars": "red",
+    "Jupiter": "peachpuff",
+    "Saturn": "lightsteelblue",
+    "Uranus": "skyblue",
+    "Neptune": "deepskyblue",
+    "STEREO-A": "cyan",
+    "STEREO-B": "magenta",
+    "Parker Solar Probe": "violet",
+    "Solar Orbiter": "blue",
+    "Juno": "pink",
+    "Voyager 1": "gold",
+    "Voyager 2": "silver",
+}
+
+
 def plot_body_position(
-    names, obstime, period, direction, earth_adjust, earth_lon
+    names,
+    obstime,
+    period,
+    direction,
+    earth_adjust,
+    earth_lon,
+    colors=default_colors,
 ):
     obstime = Time(obstime)
     hci_frame = HeliocentricInertial(obstime=obstime)
@@ -148,50 +172,37 @@ def plot_body_position(
         )
     # ------------------------------------------------------------
     for name in names:
-        if name == "Mercury":
-            kind, color = "planet", "lavender"
-            search_name = None
-        if name == "Venus":
-            kind, color = "planet", "coral"
-            search_name = None
-        if name == "Mars":
-            kind, color = "planet", "red"
-            search_name = None
-        if name == "Jupiter":
-            kind, color = "planet", "peachpuff"
-            search_name = None
-        if name == "Saturn":
-            kind, color = "planet", "lightsteelblue"
-            search_name = None
-        if name == "Uranus":
-            kind, color = "planet", "skyblue"
-            search_name = None
-        if name == "Neptune":
-            kind, color = "planet", "deepskyblue"
-            search_name = None
-        if name == "STEREO-A":
-            kind, color = "mission", "cyan"
-            search_name = None
-        if name == "STEREO-B":
-            kind, color = "mission", "magenta"
-            search_name = None
-        if name == "Parker Solar Probe":
-            kind, color = "mission", "violet"
-            search_name = None
-        if name == "Solar Orbiter":
-            kind, color = "mission", "blue"
-            search_name = None
+        search_name = None
+        if name in [
+            "Mercury",
+            "Venus",
+            "Mars",
+            "Jupiter",
+            "Saturn",
+            "Uranus",
+            "Neptune",
+        ]:
+            kind = "planet"
+        elif name in [
+            "STEREO-A",
+            "STEREO-B",
+            "Parker Solar Probe",
+            "Solar Orbiter",
+            "Juno",
+            "Voyager 1",
+            "Voyager 2",
+        ]:
+            kind = "mission"
+
         if name == "Juno":
-            kind, color = "mission", "pink"
             search_name = "Juno (spacecraft)"
-        if name == "Voyager 1":
-            kind, color = "mission", "gold"
-            search_name = None
-        if name == "Voyager 2":
-            kind, color = "mission", "silver"
-            search_name = None
+
         plotter.orbit(
-            ax, kind=kind, name=name, color=color, search_name=search_name
+            ax,
+            kind=kind,
+            name=name,
+            color=colors[name],
+            search_name=search_name,
         )
     # ==============================================================================
     fig.legend(
