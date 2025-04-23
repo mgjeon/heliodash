@@ -1,6 +1,6 @@
 import re
 
-from heliodash.packages.util.html_parser import get_bs
+from heliodash.util.html_parser import get_bs
 
 
 def soho_image(

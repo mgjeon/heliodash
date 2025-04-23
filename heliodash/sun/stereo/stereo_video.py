@@ -5,7 +5,7 @@ from urllib.request import urlretrieve
 
 from bs4 import BeautifulSoup
 
-from heliodash.packages.util.html_video import mpg_to_html5video
+from heliodash.util.html_video import mpg_to_html5video
 
 
 def stereo_video(

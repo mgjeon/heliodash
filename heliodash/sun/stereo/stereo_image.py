@@ -2,7 +2,7 @@ import re
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 
-from heliodash.packages.util.html_parser import get_bs
+from heliodash.util.html_parser import get_bs
 
 
 def stereo_image(
