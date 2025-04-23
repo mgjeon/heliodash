@@ -15,7 +15,7 @@ from sunpy.coordinates import Helioprojective
 from sunpy.coordinates.screens import SphericalScreen
 from sunpy.map import Map, make_fitswcs_header
 
-from heliodash.packages.util.html_parser import get_bs
+from heliodash.util.html_parser import get_bs
 
 wispr_norm = ImageNormalize(
     vmin=0, vmax=0.5e-11, stretch=PowerStretch(1 / 2.2)
