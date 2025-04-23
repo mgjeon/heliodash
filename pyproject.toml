@@ -1,6 +1,6 @@
 [project]
 name = "heliodash"
-version = "0.0.12"
+version = "0.0.14"
 description = "Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosphere-related data."
 readme = "README.md"
 requires-python = ">=3.10"

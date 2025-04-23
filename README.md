@@ -6,14 +6,4 @@ Heliosphere Dashboard (HelioDash) is an open-source tool for visualizing heliosp
 
 ## Running Locally
 
-Install the latest version of HelioDash:
-```
-pip install -U heliodash
-```
-
-Clone the repository and run the Streamlit app:
-```
-git clone https://github.com/mgjeon/heliodash
-cd heliodash
-streamlit run heliodash/app.py
-```
+See [this repo](https://github.com/mgjeon/heliodash_streamlit)
